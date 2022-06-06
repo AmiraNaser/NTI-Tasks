@@ -68,10 +68,16 @@ const showAllData = (allData) => {
             showAllData(allData);
         })
         editBtn.addEventListener("click", (e) => {
-            //window.location.href = "edit.html";
-            console.log("hello");
+            window.location.href = "edit.html";
+           
             
         })
+    })
+}
+const showSingleData = (allData) => {
+    allData.forEach( (data, index) => {
+        console.log("hr");
+        window.alert(`${index}`);
     })
 }
 if(contentWrap) {
