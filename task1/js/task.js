@@ -1,7 +1,7 @@
 //global identifiers
 const addForm  = document.querySelector('#addForm');
-const userData = ["userName", "userphone", "flexRadioDefault"];
-const contentWrap= document.querySelector("#contentWrap")
+const userData = ["userName", "userphone"];
+const contentWrap = document.querySelector("#contentWrap");
 // read data from localStorage
 const readuserDara = (key) => {
     let data;
@@ -26,7 +26,7 @@ const writeUserData = (key, value) => {
 if(addForm) {
     addForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const extraData = {id: Date.now()};
+        const extraData = {status: "active", id: Date.now()};
         userData.forEach( (task) => extraData[task] = addForm.elements[task].value);
         const allData = readuserDara("userData");
         allData.push(extraData);
@@ -54,8 +54,8 @@ const showAllData = (allData) => {
         createMyElement(tr, "td", data.id);
         createMyElement(tr, "td", data.userName);
         createMyElement(tr, "td", data.userphone);
-        createMyElement(tr, "td", data.flexRadioDefault);
         const td = createMyElement(tr, "td");
+        const statusbtn = createMyElement(td, "button", data.status,"btn btn-success mx-3");
         const showBtn = createMyElement(td, "button", "show","btn btn-primary mx-3");
         const editBtn = createMyElement(td, "button", "Edit","btn btn-warning mx-3");
         const delBtn  = createMyElement(td, "button", "Delete","btn btn-danger mx-3");
@@ -68,18 +68,16 @@ const showAllData = (allData) => {
             showAllData(allData);
         })
         editBtn.addEventListener("click", (e) => {
-            window.location.href = "edit.html";
-           
-            
+            //window.alert(`${data.status}`)
+            if(statusbtn.innerText == "active") {
+                statusbtn.innerText = "Inactive";
+            }else if (statusbtn.innerText = "Inactive") {
+                statusbtn.innerText = "active";
+            }
         })
     })
 }
-const showSingleData = (allData) => {
-    allData.forEach( (data, index) => {
-        console.log("hr");
-        window.alert(`${index}`);
-    })
-}
+
 if(contentWrap) {
     const allData = readuserDara("userData");
     showAllData(allData);
