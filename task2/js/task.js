@@ -77,11 +77,11 @@ const showAllData = (allData) => {
     })
 }
 const showSingleUser = (index) => {
-    localStorage.setItem("single", index);
+    localStorage.setItem("singleData", index);
     window.location.href = "single.html";
 }
 const editFun = (index) => {
-    localStorage.setItem("edit", index);
+    localStorage.setItem("editData", index);
     window.location.href = "edit.html";
 } 
 const deleteFun = (key, allData, index) => {
@@ -94,7 +94,7 @@ if(contentWrap) {
     showAllData(allData);
 }
 if(singleUserData) {
-    const index   = readuserData("single", "string");
+    const index   = readuserData("singleData", "string");
     const allData = readuserData("userData");
     try {
         const user = allData[index];
@@ -107,14 +107,13 @@ if(singleUserData) {
     }
 }
 if(editForm) {
-    const index   = readuserData("edit", "string");
+    const index = readuserData('editData', "string");
     const allData = readuserData("userData");
-    const data    = allData[index];
-    window.alert(data.id);
-    userData.forEach( (task) => editForm.elements[task].value = data[task]);
+    const task = allData[index];
+    userData.forEach( h => editForm.elements[h].value = task[h]);
     editForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        userData.forEach( (task) => allData[index][task] = editForm.elements[task].value);
+        userData.forEach( h => allData[index][h] = editForm.elements[h].value);
         writeUserData("userData", allData);
         editForm.reset();
         window.location.href = "index.html";
