@@ -13,8 +13,8 @@ apiData((res) => {
     console.log(res);
     const container = document.getElementById("myData");
     for (let i = 0; i < res.length; i++) {
-        const div = document.createComment("div");
-        div.innerHTML = 'userId: ' + res[i].userId ;
+        const div = document.createElement("div");
+        div.innerHTML = 'userId: ' + res[i].title ;
         container.appendChild(div);
     }
 })
