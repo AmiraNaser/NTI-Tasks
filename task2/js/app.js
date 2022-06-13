@@ -1,5 +1,5 @@
 function apiData (cb) {
-    const data = fetch('https://jsonplaceholder.typicode.com/todos/1');
+    const data = fetch('https://jsonplaceholder.typicode.com/comments');
     data
     .then( (res) => {
         jsonData = res.json()
@@ -12,9 +12,9 @@ function apiData (cb) {
 apiData((res) => {
     console.log(res);
     const container = document.getElementById("myData");
-    for (let i = 0; i < res.length; i++) {
-        const div = document.createElement("div");
-        div.innerHTML = 'userId: ' + res[i].title ;
-        container.appendChild(div);
-    }
+    const div = document.createElement("div");
+    div.innerText = res;
+    container.appendChild(div);
+    window.alert(res);
 })
+
