@@ -38,7 +38,7 @@ class User{
                     db.collection("users")
                     .updateOne(
                         {_id:new ObjectId(req.params.id)},
-                        { $set: userData.status == "Active"? "Active" : "Active" }
+                        { $set: userData.status == "active"? "inactive" : "active" }
                     )
                     .then(r=>res.redirect("/"))
                     .catch(e => console.log(e))
@@ -70,7 +70,7 @@ class User{
                     res.render("edit", {
                         pageTitle:"Edit User",
                         userData,
-                        isActive: userData.status == 'Active'? true : false
+                        isActive: userData.status == 'active'? true : false
                     })
                 )
             })
