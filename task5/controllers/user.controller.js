@@ -28,6 +28,23 @@ class User{
             .catch(e=> console.log(e))
         })     
     }
+    static status = (req, res) => {
+        const userId = req.params.id
+        dbConnect(db => {
+            db.collection("users")
+            .findOne({_id:new ObjectId(userId)})
+            .then(
+                userData=> 
+                    db.collection("users")
+                    .updateOne(
+                        {_id:new ObjectId(req.params.id)},
+                        { $set: userData.status == "Active"? "Active" : "Active" }
+                    )
+                    .then(r=>res.redirect("/"))
+                    .catch(e => console.log(e))
+            )
+        })
+    }
     static single = (req, res)=> { 
         const userId = req.params.id
         dbConnect(db=>{
@@ -36,9 +53,11 @@ class User{
             .then(
                 userData=>
                     res.render("single", {
-                        pageTitle:"single User", userData
+                        pageTitle:"single User",
+                        userData
                     })
                 )
+                .catch(e => console.log(e))
             })
     }
     static edit =  (req, res)=> { 
@@ -49,7 +68,9 @@ class User{
             .then(
                 userData=>
                     res.render("edit", {
-                        pageTitle:"Edit User", userData
+                        pageTitle:"Edit User",
+                        userData,
+                        isActive: userData.status == 'Active'? true : false
                     })
                 )
             })
@@ -63,7 +84,8 @@ class User{
                 { $set:req.body }
             )
             .then(r=>res.redirect("/"))
-        }  )
+            .catch(e => console.log(e))
+        })
     }
     static delItem = (req,res)=>{
         const userId = req.params.id
