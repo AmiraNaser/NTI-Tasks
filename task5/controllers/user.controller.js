@@ -23,28 +23,16 @@ class User{
     static addLogic = (req,res)=>{
         const user = req.body
         dbConnect((db)=>{
-            db.collection('users').insertOne(user)
+            db.collection('users').insertOne({
+                name: user.name,
+                age: user.age,
+                status: "active"
+            })
             .then(()=>res.redirect("/") )
             .catch(e=> console.log(e))
         })     
     }
-    static status = (req, res) => {
-        const userId = req.params.id
-        dbConnect(db => {
-            db.collection("users")
-            .findOne({_id:new ObjectId(userId)})
-            .then(
-                userData=> 
-                    db.collection("users")
-                    .updateOne(
-                        {_id:new ObjectId(req.params.id)},
-                        { $set: userData.status == "active"? "inactive" : "active" }
-                    )
-                    .then(r=>res.redirect("/"))
-                    .catch(e => console.log(e))
-            )
-        })
-    }
+
     static single = (req, res)=> { 
         const userId = req.params.id
         dbConnect(db=>{
@@ -70,7 +58,8 @@ class User{
                     res.render("edit", {
                         pageTitle:"Edit User",
                         userData,
-                        isActive: userData.status == 'active'? true : false
+                        isActive: userData.status == "active"? true: false,
+                        isInactive: userData.status == "inactive"? true: false
                     })
                 )
             })
