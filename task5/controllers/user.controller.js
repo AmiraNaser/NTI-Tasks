@@ -26,7 +26,7 @@ class User{
             db.collection('users').insertOne({
                 name: user.name,
                 age: user.age,
-                status: "active"
+                status: "Active"
             })
             .then(()=>res.redirect("/") )
             .catch(e=> console.log(e))
@@ -58,8 +58,8 @@ class User{
                     res.render("edit", {
                         pageTitle:"Edit User",
                         userData,
-                        isActive: userData.status == "active"? true: false,
-                        isInactive: userData.status == "inactive"? true: false
+                        isActive: userData.status == "Active"? true: false,
+                        isInactive: userData.status == "Inactive"? true: false
                     })
                 )
             })
